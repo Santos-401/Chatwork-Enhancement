@@ -1,0 +1,13 @@
+{
+    "name": "ChatWork-Enhancement",
+    "version": "1.00",
+    "manifest_version": 2,
+    "description": "ChatWorkを色々と便利にする拡張機能",
+    "content_security_policy": "script-src 'self'; object-src 'self'",
+
+    "content_scripts": [{
+        "matches": ["*://*.chatwork.com/*","*://chatwork.com/*","*://kcw.kddi.ne.jp/*"],
+        "css": ["res/style.css"],
+        "js": ["src/ElementController.js", "src/ChatWorkEnhancement.js"]
+    }]
+}
