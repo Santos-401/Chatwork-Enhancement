@@ -2,7 +2,7 @@
 
 ## 概要
 
-Chatworkを色々と便利にするChromeExtension。
+Chatworkを色々と便利にするChromeExtension  
 ChromeExtensionのお勉強を兼ねて作成中
 
 ## 機能
