@@ -66,8 +66,8 @@
   const KEY_ENTER = 13;
 
   /**
-   * キー押下イベントコールバック
-   * @param  {[type]} e
+   * キー押下時のイベントハンドラ
+   *@param {object} e イベント
    */
   function onKeyDown(e){
     //TODO: そのうち実装予定。今はイベント受けるだけ
@@ -94,7 +94,7 @@
 
   /**
    * 追加したボタン押下イベントコールバック
-   * @param  {[type]} e イベント
+   * @param  {Object} e イベント
    */
   function onClickChatButton(e){
     console.log("onClickChatToolbar:" + e.currentTarget.id);
@@ -119,7 +119,6 @@
 
 /**
  * Chatworkのボタンを生成しツールバーに追加
- * @return {[type]} [description]
  */
   function createReplayNotifier(){
     let buttonArray = [
