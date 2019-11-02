@@ -26,7 +26,7 @@ class ElementController {
     let ret = false ;
 
     // timeline（メッセージ表示エリア）のエレメントが取得可能か否かで判断
-    const elt = document.getElementById("_timeLine")
+    const elt = document.getElementById("_timeLine");
     if(elt != null){
       ret = true;
     }
@@ -107,6 +107,11 @@ class ElementController {
   }
 
   createSideContent(){
+    const check = document.getElementById("_subThread");
+    // 既にスレッド生成済みなら作成しない
+    if(check != null){
+      return;
+    }
     console.log("createSideContent:" );
 
     let parentDiv = document.createElement("div");

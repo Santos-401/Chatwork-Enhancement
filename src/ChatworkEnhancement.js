@@ -80,14 +80,16 @@
     }
   }
 
+  /**
+   * クリック操作時にイベントハンドラ
+   * @param  {object} e イベント
+   */
   function onClick(e){
     let target = e.target;
     if(target.className != "timelineMessage__message"){
       return;
     }
-    if(target.childElementCount < 1){
-      return;
-    }
+
     try{
       if(target.children[0].children[0].className != "chatTimeLineReply _replyMessage _showDescription"){
         return;
@@ -95,6 +97,9 @@
     } catch(e){
       return;
     }
+
+
+    eltController.createSideContent();
 
     eltController.addTextToThread(target.parentElement.parentElement.parentElement.innerHTML);
 
@@ -153,8 +158,6 @@
     ];
 
     eltController.addButtonOnToolBar(buttonArray);
-
-    eltController.createSideContent();
   }
 
 /**
