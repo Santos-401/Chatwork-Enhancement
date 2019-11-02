@@ -19,3 +19,35 @@
   line-height: 18px;
   padding: 2px 4px;
 }
+
+.subContent_thread {
+  position: relative;
+  padding-bottom: 8px;
+}
+
+.subThread__header {
+    display: flex;
+    align-items: center;
+    padding: 4px 8px;
+    margin-bottom: 8px;
+    background-color: #e6e6e6;
+}
+.subThread__body {
+    position: relative;
+    padding: 0 8px;
+}
+.subThread__body--overflow {
+    padding-right: 21px;
+}
+.subThread__body--overflow:hover {
+    border-radius: 3px;
+    position: relative;
+    overflow: scroll;
+    background: #fff;
+    margin: -5px;
+    padding: 5px 16px 5px 5px;
+}
+
+.subThread__text {
+    word-break: break-all;
+}

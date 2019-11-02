@@ -80,6 +80,31 @@
     }
   }
 
+  function onClick(e){
+    let target = e.target;
+    if(target.className != "timelineMessage__message"){
+      return;
+    }
+    if(target.childElementCount < 1){
+      return;
+    }
+    try{
+      if(target.children[0].children[0].className != "chatTimeLineReply _replyMessage _showDescription"){
+        return;
+      }
+    } catch(e){
+      return;
+    }
+
+    eltController.addTextToThread(target.parentElement.parentElement.parentElement.innerHTML);
+
+    let mid = target.children[0].children[0].dataset.mid;
+    let el = document.getElementById("_messageId" + mid);
+    if(el != null){
+      eltController.addTextToThread(el.innerHTML);
+    }
+  }
+
   /**
    * チャットルーム移動検知イベントコールバック
    */
@@ -128,6 +153,8 @@
     ];
 
     eltController.addButtonOnToolBar(buttonArray);
+
+    eltController.createSideContent();
   }
 
 /**
@@ -148,6 +175,7 @@
     //Chatroomを移動すると追加したボタンが消されるのでRoom移動を監視しとく
     eltController.addRoomChangeObserver(onChatroomChanged);
     window.addEventListener("keydown", onKeyDown);
+    window.addEventListener("click", onClick);
   }
 
   /**
