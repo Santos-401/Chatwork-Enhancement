@@ -1,6 +1,6 @@
 {
     "name": "ChatWork-Enhancement",
-    "version": "1.00",
+    "version": "1.0.8",
     "manifest_version": 2,
     "description": "ChatWorkを色々と便利にする拡張機能",
     "content_security_policy": "script-src 'self'; object-src 'self'",

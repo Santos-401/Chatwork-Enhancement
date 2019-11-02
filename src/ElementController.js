@@ -105,4 +105,53 @@ class ElementController {
     textArea.focus();
     document.execCommand('insertText', false, text);
   }
+
+  createSideContent(){
+    console.log("createSideContent:" );
+
+    let parentDiv = document.createElement("div");
+    parentDiv.className = "subContent_thread";
+    parentDiv.id = "_subThread";
+
+    let childDiv_head = document.createElement("div");
+    childDiv_head.className = "subThread__header";
+    childDiv_head.id = "_subThread_header";
+    childDiv_head.innerHTML = "スレッド";
+
+    let childDiv_body = document.createElement("div");
+    childDiv_body.className = "subThread__body";
+    childDiv_body.id = "_subThread_body";
+
+    let childDiv_container = document.createElement("div");
+    childDiv_container.className = "subThread__container";
+    childDiv_container.id = "_subThread_container";
+    childDiv_container.style.display = "block";
+
+    let childDiv_overflow = document.createElement("div");
+    childDiv_overflow.className = "subThread__body--overflow";
+    childDiv_overflow.id = "_subThread__body--overflow";
+    // childDiv_overflow.style.height = "50px";
+
+    let childDiv_thread = document.createElement("div");
+    childDiv_thread.className = "subThread__text";
+    childDiv_thread.id = "_subThread__text";
+
+    parentDiv.appendChild(childDiv_head);
+
+    childDiv_overflow.appendChild(childDiv_thread);
+    childDiv_container.appendChild(childDiv_overflow);
+    childDiv_body.appendChild(childDiv_container);
+
+    parentDiv.appendChild(childDiv_body);
+
+    let elt = document.getElementById("_subContentAreaContent");
+    elt.appendChild(parentDiv);
+  }
+
+  addTextToThread(html){
+    let elt = document.getElementById("_subThread__text");
+    let threadHTML = elt.innerHTML;
+    html += threadHTML;
+    elt.innerHTML = html;
+  }
 }
