@@ -106,23 +106,89 @@ class ElementController {
     document.execCommand('insertText', false, text);
   }
 
-  createSideContent(){
-    const check = document.getElementById("_subThread");
-    // 既にスレッド生成済みなら作成しない
+  /**
+   * 返信のあるメッセージをサブコンテンツエリアにスレッド化
+   * @param  {Element} parent クリックしたメッセージのエレメント
+   */
+  createThreadIfHasReply(parent){
+    if(parent == null){
+      console.log("createThreadIfHasReply: parent is NULL");
+      return;
+    }
+
+    // メッセージのBodyエレメントまで遡り
+    while(true){
+      if(parent.className ==  "timelineMessage__body"){
+        break;
+      }
+      parent = parent.parentElement;
+      if(parent == null){
+        // メッセージ以外をクリックしたと判断
+        return;
+      }
+    }
+
+    // 返信元メッセージのID情報を持つエレメントを取得
+    let targetMsg = parent.getElementsByClassName("chatTimeLineReply _replyMessage _showDescription");
+    if(targetMsg == null){
+      return;
+    }
+
+    // Thread生成しまずは返信先メッセージを記入
+    this.createThreadOnSubcontent();
+    this.addHtmlToThread(parent.innerHTML);
+
+    // 返信元メッセージエレメントを取得しスレッドに追記
+    // 返信元がなくなるまで繰り返し
+    while(true){
+      try{
+        parent = document.getElementById("_messageId" + targetMsg[0].dataset.mid);
+      }catch(e){
+        return;
+      }
+      if(parent == null){
+        return;
+      }
+      this.addHtmlToThread(parent.getElementsByClassName("timelineMessage__body")[0].innerHTML);
+      targetMsg = parent.getElementsByClassName("chatTimeLineReply _replyMessage _showDescription");
+    }
+  }
+
+  /**
+   * サブコンテンツエリアにスレッドを生成
+   * @return {[type]} [description]
+   */
+  createThreadOnSubcontent(){
+    // 既にスレッド生成済みなら新規作成はせず、スレッド内を空にする
+    let check = document.getElementById("_subThread__text");
     if(check != null){
+      check.innerHTML = "";
       return;
     }
     console.log("createSideContent:" );
 
+    // スレッドに必要なエレメントを生成
     let parentDiv = document.createElement("div");
     parentDiv.className = "subContent_thread";
     parentDiv.id = "_subThread";
 
+    // ヘッダ部生成
     let childDiv_head = document.createElement("div");
     childDiv_head.className = "subThread__header";
     childDiv_head.id = "_subThread_header";
     childDiv_head.innerHTML = "スレッド";
 
+    let childDiv_closeButton = document.createElement("div");
+    childDiv_closeButton.className = "subThread__close";
+    childDiv_closeButton.id = "_subThread__close";
+    childDiv_closeButton.innerHTML = "×";
+    childDiv_closeButton.addEventListener("click", this.closeSubthread);
+
+    // 作成した各エレメントの子孫関係を設定
+    childDiv_head.appendChild(childDiv_closeButton);
+    parentDiv.appendChild(childDiv_head);
+
+    // ボディ部生成
     let childDiv_body = document.createElement("div");
     childDiv_body.className = "subThread__body";
     childDiv_body.id = "_subThread_body";
@@ -141,22 +207,37 @@ class ElementController {
     childDiv_thread.className = "subThread__text";
     childDiv_thread.id = "_subThread__text";
 
-    parentDiv.appendChild(childDiv_head);
-
+    // 作成した各エレメントの子孫関係を設定
     childDiv_overflow.appendChild(childDiv_thread);
     childDiv_container.appendChild(childDiv_overflow);
     childDiv_body.appendChild(childDiv_container);
-
     parentDiv.appendChild(childDiv_body);
 
-    let elt = document.getElementById("_subContentAreaContent");
-    elt.appendChild(parentDiv);
+    // チャットルーム概要欄の上部にスレッドを追加
+    let elt = document.getElementById("_subRoomInfoArea");
+    if(elt != null){
+      elt.parentNode.insertBefore(parentDiv, elt)
+    }
   }
 
-  addTextToThread(html){
+  /**
+   * メッセージをHTML形式でスレッドに追加
+   * メッセージ間に[hr]を追加
+   * @param {[HTML]} html スレッドに追加するhtml
+   */
+  addHtmlToThread(html){
     let elt = document.getElementById("_subThread__text");
-    let threadHTML = elt.innerHTML;
-    html += threadHTML;
+    html += "<hr>" + elt.innerHTML;
     elt.innerHTML = html;
+  }
+
+  /**
+   * スレッドを削除する
+   */
+  closeSubthread(){
+    let thread = document.getElementById("_subThread");
+    if(thread != null){
+      thread.remove();
+    }
   }
 }
