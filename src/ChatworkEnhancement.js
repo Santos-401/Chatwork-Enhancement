@@ -80,29 +80,13 @@
     }
   }
 
+  /**
+   * クリック操作時にイベントハンドラ
+   * @param  {object} e イベント
+   */
   function onClick(e){
-    let target = e.target;
-    if(target.className != "timelineMessage__message"){
-      return;
-    }
-    if(target.childElementCount < 1){
-      return;
-    }
-    try{
-      if(target.children[0].children[0].className != "chatTimeLineReply _replyMessage _showDescription"){
-        return;
-      }
-    } catch(e){
-      return;
-    }
-
-    eltController.addTextToThread(target.parentElement.parentElement.parentElement.innerHTML);
-
-    let mid = target.children[0].children[0].dataset.mid;
-    let el = document.getElementById("_messageId" + mid);
-    if(el != null){
-      eltController.addTextToThread(el.innerHTML);
-    }
+    // サブコンテンツエリアにスレッド生成＆メッセージ表示
+    eltController.createThreadIfHasReply(e.target);
   }
 
   /**
@@ -153,8 +137,6 @@
     ];
 
     eltController.addButtonOnToolBar(buttonArray);
-
-    eltController.createSideContent();
   }
 
 /**

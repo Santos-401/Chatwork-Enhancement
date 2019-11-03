@@ -27,10 +27,36 @@
 
 .subThread__header {
     display: flex;
+    margin-right: auto;
     align-items: center;
     padding: 4px 8px;
     margin-bottom: 8px;
+    font-weight: 600;
     background-color: #e6e6e6;
+}
+
+.subThread__close {
+    font-size: 14px;
+    margin-left: auto;
+    box-sizing: border-box;
+    display: inline-flex;
+    -webkit-box-align: center;
+    align-items: center;
+    -webkit-box-pack: center;
+    justify-content: center;
+    min-width: 26px;
+    min-height: 26px;
+    background-color: rgb(0, 106, 156);
+    user-select: none;
+    color: rgb(255, 255, 255);
+    fill: rgb(255, 255, 255);
+    cursor: pointer;
+    padding: 0px 12px;
+    border-width: 1px;
+    border-style: solid;
+    border-color: rgb(0, 106, 156);
+    border-image: initial;
+    border-radius: 2px;
 }
 .subThread__body {
     position: relative;
